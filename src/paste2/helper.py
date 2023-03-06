@@ -63,7 +63,7 @@ def generalized_kl_divergence(X, Y):
     return np.asarray(D)
 
 
-def glmpca_distance(X, Y, latent_dim=50, filter=True, verbose=True):
+def glmpca_distance(X, Y, latent_dim=50, filter=True, verbose=True, max_iter=20):
     """
     param: X - np array with dim (n_samples by n_features)
     param: Y - np array with dim (m_samples by n_features)
@@ -79,7 +79,8 @@ def glmpca_distance(X, Y, latent_dim=50, filter=True, verbose=True):
         joint_matrix = joint_matrix[:, top_indices]
 
     print("Starting GLM-PCA...")
-    res = glmpca(joint_matrix.T, latent_dim, penalty=1, verbose=verbose)
+    ctl = {"maxIter": max_iter, "eps": 1e-4, "optimizeTheta": True}
+    res = glmpca(joint_matrix.T, latent_dim, ctl=ctl, penalty=1, verbose=verbose)
     #res = glmpca(joint_matrix.T, latent_dim, fam='nb', penalty=1, verbose=True)
     reduced_joint_matrix = res["factors"]
     # print("GLM-PCA finished with joint matrix shape " + str(reduced_joint_matrix.shape))

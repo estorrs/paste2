@@ -297,7 +297,7 @@ def partial_pairwise_align(sliceA, sliceB, s, alpha=0.1, armijo=False, dissimila
 
 
 def partial_pairwise_align_histology(sliceA, sliceB, alpha=0.1, s=None, armijo=False, dissimilarity='glmpca', use_rep=None, G_init=None, a_distribution=None,
-                   b_distribution=None, norm=True, return_obj=False, verbose=False, **kwargs):
+                   b_distribution=None, norm=True, return_obj=False, verbose=False, max_iter=20, **kwargs):
     """
     Optimal partial alignment of two slices using both gene expression and histological image information.
 
@@ -325,7 +325,7 @@ def partial_pairwise_align_histology(sliceA, sliceB, alpha=0.1, s=None, armijo=F
         s_B = B_X + 0.01
         M_exp = kl_divergence(s_A, s_B)
     elif dissimilarity.lower() == 'glmpca':
-        M_exp = glmpca_distance(A_X, B_X, latent_dim=50, filter=True, verbose=verbose)
+        M_exp = glmpca_distance(A_X, B_X, latent_dim=50, filter=True, verbose=verbose, max_iter=max_iter)
     else:
         print("ERROR")
         exit(1)

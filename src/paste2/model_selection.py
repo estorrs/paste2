@@ -133,7 +133,7 @@ def calculate_convex_hull_edge_inconsistency(sliceA, sliceB, pi):
 """
 Main function.
 """
-def select_overlap_fraction(sliceA, sliceB, alpha=0.1):
+def select_overlap_fraction(sliceA, sliceB, alpha=0.1, max_iter=20):
     """
     Estimates the overlap percentage of two ST slices.
 
@@ -151,7 +151,7 @@ def select_overlap_fraction(sliceA, sliceB, alpha=0.1):
     sliceB = sliceB[:, common_genes]
     # Get transport cost matrix
     A_X, B_X = to_dense_array(extract_data_matrix(sliceA, None)), to_dense_array(extract_data_matrix(sliceB, None))
-    M = glmpca_distance(A_X, B_X, latent_dim=50, filter=True, verbose=True)
+    M = glmpca_distance(A_X, B_X, latent_dim=50, filter=True, verbose=True, max_iter=max_iter)
     # Get an alignment for each overlap percentage
     m_to_pi = {}
     for m in overlap_to_check:
